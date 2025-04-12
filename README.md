@@ -5,7 +5,7 @@ Here we provide the instructions to verify all proofs presented in Section 7, an
 Optionally, we provide the instructions to run the rest of non-relational proofs.
 
 The artifact is a docker image containing HOL Light and a fork of the s2n-bignum repository (called 'hol-bignum' in the paper for anonymicity) containing the proof suite presented in the paper.
-The artifac is available at [https://doi.org/XX.XXXX/zenodo.XXXXXXXX](https://doi.org/XX.XXXX/zenodo.XXXXXXXX).
+The artifact is available at [https://doi.org/XX.XXXX/zenodo.XXXXXXXX](https://doi.org/XX.XXXX/zenodo.XXXXXXXX).
 We do not require any large amount of system resources to run the artifact, we tested it on Linux and Mac laptops.
 
 We claim all three badges: available, functional, and reusable.
