@@ -4,9 +4,8 @@ Artifact documentation for the paper #20: "Relational Hoare Logic for Realistica
 Here we provide the instructions to verify all proofs presented in Section 7, and to confirm that the size of the work matches the numbers we reported.
 Optionally, we provide the instructions to run the rest of non-relational proofs.
 
-The artifact is a docker image containing HOL Light and a fork of the s2n-bignum repository (called 'hol-bignum' in the paper for anonymicity) containing the proof suite presented in the paper.
-The artifact is available at [https://doi.org/XX.XXXX/zenodo.XXXXXXXX](https://doi.org/XX.XXXX/zenodo.XXXXXXXX).
-We do not require any large amount of system resources to run the artifact, we tested it on AArch64 Linux and Mac laptops.
+The artifact is a docker image containing HOL Light and a fork of the s2n-bignum repository (called 'hol-bignum' in the paper for anonymity) containing the proof suite presented in the paper.
+We do not require any large amount of system resources to run the artifact, we tested it on AArch64 Linux (Mac users may encounter some issues.)
 
 We claim all three badges: available, functional, and reusable.
 
@@ -37,7 +36,7 @@ and has the running time printed at the end of the file.
 
 ## Available Badge
 
-The artifact is available on Zenodo: [https://doi.org/XX.XXXX/zenodo.XXXXXXXX](https://doi.org/XX.XXXX/zenodo.XXXXXXXX).
+The artifact is available on Zenodo.
 
 ## Functional Badge (~XXX minutes)
 
@@ -64,13 +63,27 @@ The evaluation for the Functional Badge consists of loading and running the arti
 
     You can find these proofs at:
 
-    - XXX
-    - XXX
-    - XXX
-    - XXX
-    - XXX
+    - `./s2n-bignum/arm/proofs/bignum_inv_p25519.fn_and_const_combined.ml`
+    - `./s2n-bignum/arm/proofs/bignum_copy.constant_time_ensures_n.ml`
+    - `./s2n-bignum/arm/proofs/bignum_copy.fn_and_const_combined.ml`
+    - `./s2n-bignum/arm/proofs/bignum_copy.constant_time_ensures2.ml`
+    - `./s2n-bignum/arm/proofs/bignum_mul_8_16.ml`
+    - `./s2n-bignum/arm/proofs/bignum_sqr_8_16.ml`
+    - `./s2n-bignum/arm/proofs/bignum_emontredc_8n_cdiff.ml`
+    - `./s2n-bignum/arm/proofs/bignum_montmul_p256.ml`
+    - `./s2n-bignum/arm/proofs/bignum_montmul_p384.ml`
+    - `./s2n-bignum/arm/proofs/bignum_montmul_p521.ml`
+    - `./s2n-bignum/arm/proofs/bignum_montsqr_p256.ml`
+    - `./s2n-bignum/arm/proofs/bignum_montsqr_p384.ml`
+    - `./s2n-bignum/arm/proofs/bignum_montsqr_p521.ml`
+    - `./s2n-bignum/arm/proofs/bignum_mul_p521.ml`
+    - `./s2n-bignum/arm/proofs/bignum_sqr_p521.ml`
+    - `./s2n-bignum/arm/proofs/p256_montjadd.ml`
+    - `./s2n-bignum/arm/proofs/p256_montjdouble.ml`
+    - `./s2n-bignum/arm/proofs/p384_montjadd.ml`
+    - `./s2n-bignum/arm/proofs/p384_montjdouble.ml`
 
-1. The expected results is:
+2. The expected results is:
 
     ```bash
     XXX
@@ -79,14 +92,14 @@ The evaluation for the Functional Badge consists of loading and running the arti
     From the output `*.correct` files, you will be able to find the lines that starts with `(CAV25)`
     followed by the proven theorems for constant-time properties or program equivalences.
 
-1. (Optionally) We added a few more equivalence proofs for the x86 architecture after the paper submission, you can run these with (~XXX min):
+3. (Optionally) We added a few more equivalence proofs for the x86 architecture after the paper submission, you can run these with (~XXX min):
 
     ```bash
     cd s2n-bignum/x86
     make tutorial
     ```
 
-1. (Optionally) Run the whole s2n-bignum with both relational and non-relational proofs (~XXX hours):
+4. (Optionally) Run the whole s2n-bignum with both relational and non-relational proofs (~XXX hours):
 
     ```bash
     cd s2n-bignum/arm
@@ -97,42 +110,45 @@ The evaluation for the Functional Badge consists of loading and running the arti
 
 To confirm the Reusable Badge, check the following:
 
-- s2n-bignum is open-source and distributed under Apache-2.0 or ISC or MIT-0 (see `./LICENSE.md`), which allow reuse and repurposing.
-- s2n-bignum only depends on HOL Light (which indirectly depends on OCaml) and the usual disassembly suite (e.g., `as`). We provide makefiles to help building the tool and verify the proofs (see `./x86/Makefile`).
-- We encourage reviewers to try the tutorials in `./tutorial`.
-- To confirm the size of our work, run:
-  - `XXX` for the size of the whole s2n-bignum (expected: XXX)
-  - `XXX` for the size of the constant-time proofs (expected: XXX)
-  - `XXX` for the size of the equivalence proofs (expected: XXX)
-  - `XXX` for the size of the relational framework (expected: XXX)
-- To use s2n-bignum outside the artifact refer to the instructions at [https://github.com/awslabs/s2n-bignum/tree/main](https://github.com/awslabs/s2n-bignum).
+- s2n-bignum is open-source and distributed under Apache-2.0 or ISC or MIT-0 (see `LICENSE.md` in Zenodo or `./s2n-bignum/LICENSE`), which allow reuse and repurposing.
+- s2n-bignum only depends on HOL Light (which indirectly depends on OCaml) and the usual disassembly suite (e.g., `as`). We provide makefiles to help building the tool and verify the proofs (e.g., `./s2n-bignum/x86/Makefile`).
+- We encourage reviewers to try the tutorials in `./s2n-bignum/tutorial`.
+- To confirm the size of our work, run (note that the paper may not report the exact same numbers as the ones below as s2n-bignum is under active development and we performed a patch and rebase to create the artifact, we will update the camera-ready version of the paper with this numbers):
+  - `./cloc ./s2n-bignum/common --by-file --not-match-f '^(relational2\.ml|relational_n\.ml)$'` for the size of the non-relational part of s2n-bignum (expected: ~10k LOC)
+  - `cloc ./s2n-bignum/common/relational2.ml s2n-bignum/common/relational_n.ml` for the size of the relational framework (expected: 1630 LOC)
+  - `cloc . --by-file --match-f '^(bignum_inv_p25519.fn_and_const_combined\.ml|bignum_copy\.constant_time_ensures2\.ml|bignum_copy\.constant_time_ensures_n\.ml|bignum_copy\.fn_and_const_combined\.ml)$'` for the size of the constant-time proofs (expected: 4293 LOC)
+  - `cloc --by-file */proofs/equiv.ml` for the size of the equivalence framework (expected: 2452 LOC)
+  - `cloc ./s2n-bignum/arm/proofs --by-file --match-f '^(bignum_mul_8_16\.ml|bignum_sqr_8_16\.ml|bignum_emontredc_8n_cdiff\.ml|bignum_montmul_p256\.ml|bignum_montmul_p384\.ml|bignum_montmul_p521\.ml|bignum_montsqr_p256\.ml|bignum_montsqr_p384\.ml|bignum_montsqr_p521\.ml|bignum_mul_p521\.ml|bignum_sqr_p521\.ml|p256_montjadd\.ml|p256_montjdouble\.ml|p384_montjadd\.ml|p384_montjdouble\.ml)$'` for the size of equivalence proofs (expected 33k LOC)
+  - `cloc ./s2n-bignum --include-lang=OCaml` for the whole s2n-bignum proofs (expected: 890k LOC)
+- To use s2n-bignum outside the artifact refer to the instructions at [https://github.com/awslabs/s2n-bignum](https://github.com/awslabs/s2n-bignum/tree/main).
 - The code is well written and documented, important files are (you can open files with `vi <filename>`, show line numbers with `:set number`, and goto a specific line with `:line_number`):
-  - `s2n-bignum/common/relational_n.ml`
+  - `./s2n-bignum/common/relational_n.ml`
     - line 155: Definition 3 (Stronger Eventually), page 6
     - line 171: Conjunction rule, page 7
     - line 268: Lemma 1, page 7
     - line 350: Definition 4 (Stronger Ensures), page 7
     - line 363: Theorem 1, page 8
     - line 394: Theorem 2, page 8
-  - `s2n-bignum/common/relational2.ml`
+  - `./s2n-bignum/common/relational2.ml`
     - line 22: Definition 5 (Relational Ensures), page 8
     - line 249: Commutativity rule, page 7
     - line 256: Composition rule, page 7
     - line 329: Definition 6 (Hybrid Ensures 2), page 10 (Note that, the repo does not provide an explicit definition of "Hybrid Ensures 2", instead it matches the precondition of Theorem 4)
     - line 329: Theorem 4, page 10
     - line 349: Theorem 3, page 10
-    - line 358: Lemma 2 (Commutativity), page 9
+    - line 358: Lemma 2 (Commutativity), page **9**
     - line 393: Lemma 3 (Compositional), page 9 (typo in the paper: the step function in the rule should be n0 + n1 and m0 + m1 as in the repo. We will fix the paper)
     - line 495: Lemma 5 (Conjunction), page 9
     - line 515: Lemma 4 (Compositional of Frame Conditions), page 9
-  - `s2n-bignum/XXX`
-    - line XXX: Definition 7 (Constant-Time via Event Accumulation), page 12
-    - line XXX: Definition 8 (Constant-Time via Unary to Relational Embedding), page 13
-  - `s2n-bignum/common/equiv.ml`
-    - line XXX: Definition 9 (Equivalence), page 14
-    - line XXX: Theorem 5 (Transfer of Correctness through Equality), page 15
-  - `s2n-bignum/arm/proofs/equiv.ml`
 
-## Artifact Notes
+## Changelog & Notes
 
-This artifact has been compiled with `docker build -t s2n-bignum .` (~10 min) on a linux machine and saved with `docker save s2n-bignum > s2n-bignum.tar` (<1 min).
+s2n-bignum is under active development, during the last few months we have added some equivalence proofs for the x86 architecture and other minor changes:
+
+- previously conditional branch event was only taking one parameter (true/false, for taken/not taken); but now it is taking a pair of (current PC, next PC). This is to support return instruction.
+- load/store are having one additional natural number parameter, which is the access size.
+- size of constant-time proofs is slightly bigger.
+
+> We will update the paper to reflect these changes for the camera-ready version.
+
+This artifact has been compiled with `docker build -t s2n-bignum .` (~10 min) on a linux machine and saved with `docker save s2n-bignum > s2n-bignum.tar` (<1 min). The docker image is ~2.6GB
