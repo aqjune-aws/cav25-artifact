@@ -10,7 +10,7 @@ We do not require any large amount of system resources to run the artifact, we t
 
 We claim all three badges: available, functional, and reusable.
 
-## Smoke-Test Phase
+## Smoke-Test Phase (~5 minutes)
 
 The correct behaviour of the artifcat can be evaluated by loading the docker image and running the tutorial of s2n-bignum:
 
@@ -28,11 +28,29 @@ The correct behaviour of the artifcat can be evaluated by loading the docker ima
     make tutorial -j
     ```
 
-1. The expected result is: it will not have any line including 'Failure' or 'Exception:',
-and has the running time printed at the end of the file.
+    > Mac users: if the script fails is probably due to out of memory, you can try to run the script with `make tutorial -j2`.
+
+1. Expect the script to end with the list of all proof verified in the tutorial and no line containing the keyword 'Failure' or 'Exception':
 
     ```bash
-    XXX
+    ../tools/run-proof.sh "tutorial/bignum.native" "tutorial/bignum.correct"
+    ../tools/run-proof.sh "tutorial/branch.native" "tutorial/branch.correct"
+    ../tools/run-proof.sh "tutorial/loop.native" "tutorial/loop.correct"
+    ../tools/run-proof.sh "tutorial/memory.native" "tutorial/memory.correct"
+    ../tools/run-proof.sh "tutorial/rel_equivtac.native" "tutorial/rel_equivtac.correct"
+    ../tools/run-proof.sh "tutorial/rel_loop.native" "tutorial/rel_loop.correct"
+    ../tools/run-proof.sh "tutorial/rel_reordertac.native" "tutorial/rel_reordertac.correct"
+    ../tools/run-proof.sh "tutorial/rel_simp.native" "tutorial/rel_simp.correct"
+    ../tools/run-proof.sh "tutorial/rel_veceq.native" "tutorial/rel_veceq.correct"
+    ../tools/run-proof.sh "tutorial/sequence.native" "tutorial/sequence.correct"
+    ../tools/run-proof.sh "tutorial/simple.native" "tutorial/simple.correct"
+    ```
+
+    Each `*.correct` file should contain end with the running time, e.g.:
+
+    ```bash
+    root@217ddc1ecf82:/cav25/s2n-bignum/arm# tail -n 1 tutorial/rel_equivtac.correct
+    Running time: 26.000000 sec, Start unixtime: 1744637734.000000, End unixtime: 1744637760.000000
     ```
 
 ## Available Badge
