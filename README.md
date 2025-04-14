@@ -6,7 +6,7 @@ Optionally, we provide the instructions to run the rest of non-relational proofs
 
 The artifact is a docker image containing HOL Light and a fork of the s2n-bignum repository (called 'hol-bignum' in the paper for anonymicity) containing the proof suite presented in the paper.
 The artifact is available at [https://doi.org/XX.XXXX/zenodo.XXXXXXXX](https://doi.org/XX.XXXX/zenodo.XXXXXXXX).
-We do not require any large amount of system resources to run the artifact, we tested it on Linux and Mac laptops.
+We do not require any large amount of system resources to run the artifact, we tested it on AArch64 Linux and Mac laptops.
 
 We claim all three badges: available, functional, and reusable.
 
@@ -23,10 +23,11 @@ docker run -it s2n-bignum /bin/bash
 2. Run the tutorial (~5 min):
 ```bash
 cd $HOME/arm
-make tutorial
+make tutorial -j
 ```
 
-3. The expected result is:
+3. The expected result is: it will not have any line including 'Failure' or 'Exception:',
+and has the running time printed at the end of the file.
 ```bash
 XXX
 ```
@@ -48,9 +49,14 @@ docker run -it s2n-bignum /bin/bash
 2. Run the proofs of Section 7 (~XXX min):
 ```bash
 cd $HOME/arm
-make proofs-cav25
+make proofs-cav25 -j
 ```
-By running the benchmark above, XXX proofs are machine checkd (2 constant-time proofs and XXX equivalences). You can find these proofs at:
+By running the benchmark above, 19 proofs are machine checked:
+- 4 constant-time proofs, where 3 are different styles of proofs of `bignum_copy` and 1 is the proof of `bignum_inv_p25519`.
+- 15 program equivalence proofs.
+
+You can find these proofs at:
+
 - XXX
 - XXX
 - XXX
@@ -61,6 +67,9 @@ By running the benchmark above, XXX proofs are machine checkd (2 constant-time p
 ```bash
 XXX
 ```
+
+From the output `*.correct` files, you will be able to find the lines that starts with `(CAV25)`
+followed by the proven theorems for constant-time properties or program equivalences.
 
 4. (Optionally) We added a few more equivalence proofs for the x86 architecture after the paper submission, you can run these with (~XXX min):
 ```bash
