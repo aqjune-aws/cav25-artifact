@@ -17,7 +17,7 @@ The correct behaviour of the artifcat can be evaluated by loading the docker ima
 1. Load and enter the provided docker image:
 ```bash
 docker load < s2n-bignum.tar
-docker run -it s2n-bignum /bin/bash
+docker run -it cav25-trial:7.0 /bin/bash
 ```
 
 2. Run the tutorial (~5 min):
@@ -43,7 +43,7 @@ The evaluation for the Functional Badge consists of loading and running the arti
 1. Load and enter the provided docker image:
 ```bash
 docker load < s2n-bignum.tar
-docker run -it s2n-bignum /bin/bash
+docker run -it cav25-trial:7.0 /bin/bash
 ```
 
 2. Run the proofs of Section 7 (~XXX min):
