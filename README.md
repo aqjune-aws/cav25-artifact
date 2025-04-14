@@ -6,13 +6,13 @@ Optionally, we provide the instructions to run the rest of non-relational proofs
 
 The artifact is a docker image containing HOL Light and a fork of the s2n-bignum repository (called 'hol-bignum' in the paper for anonymity) containing the proof suite presented in the paper.
 The artifact is available on Zenodo at [10.5281/zenodo.15210623](https://doi.org/10.5281/zenodo.15210623).
-We do not require any large amount of system resources to run the artifact, we tested it on AArch64 Linux (Mac users may encounter some issues.)
+We do not require any large amount of system resources to run the artifact, we tested it on AArch64 Linux and Mac.
 
 We claim all three badges: available, functional, and reusable.
 
 ## Smoke-Test Phase (~5 minutes)
 
-The correct behaviour of the artifcat can be evaluated by loading the docker image and running the tutorial of s2n-bignum:
+The correct behavior of the artifact can be evaluated by loading the docker image and running the tutorial of s2n-bignum:
 
 1. Load and enter the provided docker image (<1 min):
 
@@ -21,45 +21,38 @@ The correct behaviour of the artifcat can be evaluated by loading the docker ima
     docker run -it cav25-trial:7.0 /bin/bash
     ```
 
-1. Run the tutorial (~5 min):
+2. Run the tutorial (~5 min):
 
     ```bash
     cd s2n-bignum/arm
     make tutorial -j
     ```
 
-    > Mac users: if the script fails is probably due to out of memory, you can try to run the script with `make tutorial -j2`.
+    > Mac users: if the script fails is probably due to out of memory, you can try to run the script with `make tutorial -j2` or `make tutorial` (it will take longer).
 
-1. Expect the script to end with the list of all proof verified in the tutorial and no line containing the keyword 'Failure' or 'Exception':
+3. The script should generate some logs for each call of `../tools/run-proof.sh`, some warnings are expected, but the script should not fail. The script will generate a `*.correct` file for each proof.
+
+    Each `*.correct` file should end with the running time, e.g.:
 
     ```bash
-    ../tools/run-proof.sh "tutorial/bignum.native" "tutorial/bignum.correct"
-    ../tools/run-proof.sh "tutorial/branch.native" "tutorial/branch.correct"
-    ../tools/run-proof.sh "tutorial/loop.native" "tutorial/loop.correct"
-    ../tools/run-proof.sh "tutorial/memory.native" "tutorial/memory.correct"
-    ../tools/run-proof.sh "tutorial/rel_equivtac.native" "tutorial/rel_equivtac.correct"
-    ../tools/run-proof.sh "tutorial/rel_loop.native" "tutorial/rel_loop.correct"
-    ../tools/run-proof.sh "tutorial/rel_reordertac.native" "tutorial/rel_reordertac.correct"
-    ../tools/run-proof.sh "tutorial/rel_simp.native" "tutorial/rel_simp.correct"
-    ../tools/run-proof.sh "tutorial/rel_veceq.native" "tutorial/rel_veceq.correct"
-    ../tools/run-proof.sh "tutorial/sequence.native" "tutorial/sequence.correct"
-    ../tools/run-proof.sh "tutorial/simple.native" "tutorial/simple.correct"
+    tail -n 1 tutorial/rel_equivtac.correct
+    Running time: 26.000000 sec, Start unixtime: 1744637734.000000, End unixtime: 1744637760.000000
     ```
 
-    Each `*.correct` file should contain end with the running time, e.g.:
+    If an error occurred, the `*.correct` file will contain the keyword 'Failure' or 'Exception'. Make sure none of the `*.correct` files contain these keywords:
 
     ```bash
-    root@217ddc1ecf82:/cav25/s2n-bignum/arm# tail -n 1 tutorial/rel_equivtac.correct
-    Running time: 26.000000 sec, Start unixtime: 1744637734.000000, End unixtime: 1744637760.000000
+    grep -F 'Failure' tutorial/*.correct
+    grep -F 'Exception' tutorial/*.correct
     ```
 
 ## Available Badge
 
 The artifact is available on Zenodo at [10.5281/zenodo.15210623](https://doi.org/10.5281/zenodo.15210623).
 
-## Functional Badge (~XXX minutes)
+## Functional Badge (~20 minutes)
 
-The evaluation for the Functional Badge consists of loading and running the artifact on the realtional proofs presented in Section 7.
+The evaluation for the Functional Badge consists of loading and running the artifact on the relational proofs presented in Section 7.
 
 1. Load and enter the provided docker image (<1 min):
 
@@ -68,12 +61,14 @@ The evaluation for the Functional Badge consists of loading and running the arti
     docker run -it cav25-trial:7.0 /bin/bash
     ```
 
-1. Run the proofs of Section 7 (~XXX min):
+2. Run the proofs of Section 7 (~30 min):
 
     ```bash
     cd s2n-bignum/arm
     make proofs-cav25 -j
     ```
+
+    > Mac users: as for the tutorial, try `make proofs-cav25 -j2` if any error occurs. Execution time may take hours without multi-threading.
 
     By running the benchmark above, 19 proofs are machine checked:
 
@@ -102,44 +97,47 @@ The evaluation for the Functional Badge consists of loading and running the arti
     - `./s2n-bignum/arm/proofs/p384_montjadd.ml`
     - `./s2n-bignum/arm/proofs/p384_montjdouble.ml`
 
-2. The expected results is:
+3. As for the smoke-test phase, check the expected result by the lack of failures during the script execution:
 
     ```bash
-    XXX
+    grep -F 'Failure' **/*.correct
+    grep -F 'Exception' **/*.correct
     ```
 
-    From the output `*.correct` files, you will be able to find the lines that starts with `(CAV25)`
-    followed by the proven theorems for constant-time properties or program equivalences.
-
-3. (Optionally) We added a few more equivalence proofs for the x86 architecture after the paper submission, you can run these with (~XXX min):
+    From the output `*.correct` files, the lines starting with "(CAV25)" describes the proofs that were run (expect more than 15 entries as the same theorem can be tested multiple times with different parameters):
 
     ```bash
-    cd s2n-bignum/x86
-    make tutorial
+    grep -F '(CAV25)' **/*.correct
     ```
 
-4. (Optionally) Run the whole s2n-bignum with both relational and non-relational proofs (~XXX hours):
+4. (Optional) We added a few more equivalence proofs for the x86 architecture after the paper submission, you can run these with (~20 min):
 
     ```bash
-    cd s2n-bignum/arm
-    make proofs
+    cd ../x86
+    make tutorial -j
+    ```
+
+5. (Optional) Run the whole s2n-bignum with both relational and non-relational proofs (~3 hours):
+
+    ```bash
+    cd ../arm
+    make proofs -j
     ```
 
 ## Reusable Badge
 
 To confirm the Reusable Badge, check the following:
 
-- s2n-bignum is open-source and distributed under Apache-2.0 or ISC or MIT-0 (see `LICENSE.md` in Zenodo or `./s2n-bignum/LICENSE`), which allow reuse and repurposing.
-- s2n-bignum only depends on HOL Light (which indirectly depends on OCaml) and the usual disassembly suite (e.g., `as`). We provide makefiles to help building the tool and verify the proofs (e.g., `./s2n-bignum/x86/Makefile`).
+- s2n-bignum is open-source and distributed under Apache-2.0, ISC or MIT-0 (see `LICENSE.md` in Zenodo or `./s2n-bignum/LICENSE`), which allow reuse and repurposing.
+- s2n-bignum only depends on HOL Light (which indirectly depends on OCaml) and the usual disassembly suite (e.g., `as`). We provide makefiles to help building the tool and verify the proofs (e.g., `./s2n-bignum/x86/Makefile`). To build and use s2n-bignum outside the artifact refer to the instructions at [github.com/awslabs/s2n-bignum](https://github.com/awslabs/s2n-bignum/tree/main)
 - We encourage reviewers to try the tutorials in `./s2n-bignum/tutorial`.
-- To confirm the size of our work, run (note that the paper may not report the exact same numbers as the ones below as s2n-bignum is under active development and we performed a patch and rebase to create the artifact, we will update the camera-ready version of the paper with this numbers):
-  - `./cloc ./s2n-bignum/common --by-file --not-match-f '^(relational2\.ml|relational_n\.ml)$'` for the size of the non-relational part of s2n-bignum (expected: ~10k LOC)
+- To confirm the size of our work, run (note that the paper may not report the exact same numbers as the ones below as s2n-bignum is under active development and we performed a patch and rebase to create the artifact, we will update the camera-ready version of the paper with these numbers):
+  - `cloc ./s2n-bignum/common --by-file --not-match-f '^(relational2\.ml|relational_n\.ml)$'` for the size of the non-relational part of s2n-bignum (expected: ~10k LOC)
   - `cloc ./s2n-bignum/common/relational2.ml s2n-bignum/common/relational_n.ml` for the size of the relational framework (expected: 1630 LOC)
   - `cloc . --by-file --match-f '^(bignum_inv_p25519.fn_and_const_combined\.ml|bignum_copy\.constant_time_ensures2\.ml|bignum_copy\.constant_time_ensures_n\.ml|bignum_copy\.fn_and_const_combined\.ml)$'` for the size of the constant-time proofs (expected: 4293 LOC)
   - `cloc --by-file */proofs/equiv.ml` for the size of the equivalence framework (expected: 2452 LOC)
   - `cloc ./s2n-bignum/arm/proofs --by-file --match-f '^(bignum_mul_8_16\.ml|bignum_sqr_8_16\.ml|bignum_emontredc_8n_cdiff\.ml|bignum_montmul_p256\.ml|bignum_montmul_p384\.ml|bignum_montmul_p521\.ml|bignum_montsqr_p256\.ml|bignum_montsqr_p384\.ml|bignum_montsqr_p521\.ml|bignum_mul_p521\.ml|bignum_sqr_p521\.ml|p256_montjadd\.ml|p256_montjdouble\.ml|p384_montjadd\.ml|p384_montjdouble\.ml)$'` for the size of equivalence proofs (expected 33k LOC)
   - `cloc ./s2n-bignum --include-lang=OCaml` for the whole s2n-bignum proofs (expected: 890k LOC)
-- To use s2n-bignum outside the artifact refer to the instructions at [https://github.com/awslabs/s2n-bignum](https://github.com/awslabs/s2n-bignum/tree/main).
 - The code is well written and documented, important files are (you can open files with `vi <filename>`, show line numbers with `:set number`, and goto a specific line with `:line_number`):
   - `./s2n-bignum/common/relational_n.ml`
     - line 155: Definition 3 (Stronger Eventually), page 6
@@ -159,6 +157,7 @@ To confirm the Reusable Badge, check the following:
     - line 393: Lemma 3 (Compositional), page 9 (typo in the paper: the step function in the rule should be n0 + n1 and m0 + m1 as in the repo. We will fix the paper)
     - line 495: Lemma 5 (Conjunction), page 9
     - line 515: Lemma 4 (Compositional of Frame Conditions), page 9
+  - To build and use s2n-bignum outside the artifact refer to the instructions at [github.com/awslabs/s2n-bignum](https://github.com/awslabs/s2n-bignum/tree/main).
 
 ## Changelog & Notes
 
