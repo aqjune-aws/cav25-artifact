@@ -4,7 +4,9 @@ Artifact documentation for the paper #20: "Relational Hoare Logic for Realistica
 Here we provide the instructions to verify all proofs presented in Section 7, and to confirm that the size of the work matches the numbers we reported.
 Optionally, we provide the instructions to run the rest of non-relational proofs.
 
-The artifact is a docker image containing HOL Light and a fork of the s2n-bignum repository (called 'hol-bignum' in the paper for anonymity) containing the proof suite presented in the paper.
+The artifact is a docker image containing HOL Light and a clone of the s2n-bignum repository (called 'hol-bignum' in the paper for anonymity) containing the proof suite presented in the paper.
+The cloned s2n-bignum directory is a result of cloning https://github.com/awslabs/s2n-bignum and applying a patch that
+(1) adds constant time proofs that are not available in the mainstream yet, and (2) updating the existing equivalence checking proofs to explicitly print the equivalence theorems for artifact evaluation.
 The artifact is available on Zenodo at [10.5281/zenodo.15210623](https://doi.org/10.5281/zenodo.15210623).
 We do not require any large amount of system resources to run the artifact, we tested it on AArch64 Linux and Mac.
 
@@ -28,9 +30,9 @@ The correct behavior of the artifact can be evaluated by loading the docker imag
     make tutorial -j
     ```
 
-    > Mac users: if the script fails is probably due to out of memory, you can try to run the script with `make tutorial -j2` or `make tutorial` (it will take longer).
+    > Mac users: if the script fails, it is probably due to out of memory. You can try to run the script with `make tutorial -j2` or `make tutorial` (it will take longer, though).
 
-3. The script should generate some logs for each call of `../tools/run-proof.sh`, some warnings are expected, but the script should not fail. The script will generate a `*.correct` file for each proof.
+3. The script should generate `*.correct` logs in `arm/tutorial/` for each `*.ml` proof file. Some warnings are expected, but the script should not fail.
 
     Each `*.correct` file should end with the running time, e.g.:
 
@@ -50,7 +52,7 @@ The correct behavior of the artifact can be evaluated by loading the docker imag
 
 The artifact is available on Zenodo at [10.5281/zenodo.15210623](https://doi.org/10.5281/zenodo.15210623).
 
-## Functional Badge (~20 minutes)
+## Functional Badge (~2 hours)
 
 The evaluation for the Functional Badge consists of loading and running the artifact on the relational proofs presented in Section 7.
 
@@ -61,7 +63,7 @@ The evaluation for the Functional Badge consists of loading and running the arti
     docker run -it cav25-trial:7.0 /bin/bash
     ```
 
-2. Run the proofs of Section 7 (~30 min):
+2. Run the proofs of Section 7 (~2 hours):
 
     ```bash
     cd s2n-bignum/arm
@@ -104,20 +106,13 @@ The evaluation for the Functional Badge consists of loading and running the arti
     grep -F 'Exception' **/*.correct
     ```
 
-    From the output `*.correct` files, the lines starting with "(CAV25)" describes the proofs that were run (expect more than 15 entries as the same theorem can be tested multiple times with different parameters):
+    From the output `*.correct` files, the lines starting with "(CAV25)" describes the proofs that were run (expect more than 19 entries as the same theorem can be tested multiple times with different parameters):
 
     ```bash
     grep -F '(CAV25)' **/*.correct
     ```
 
-4. (Optional) We added a few more equivalence proofs for the x86 architecture after the paper submission, you can run these with (~20 min):
-
-    ```bash
-    cd ../x86
-    make tutorial -j
-    ```
-
-5. (Optional) Run the whole s2n-bignum with both relational and non-relational proofs (~3 hours):
+4. (Optional) Run the whole s2n-bignum with both relational and non-relational proofs that are already checked in the s2n-bignum mainstream (~5 hours). This will not include constant-time proofs since they are not in the mainstream yet.
 
     ```bash
     cd ../arm
@@ -129,8 +124,8 @@ The evaluation for the Functional Badge consists of loading and running the arti
 To confirm the Reusable Badge, check the following:
 
 - s2n-bignum is open-source and distributed under Apache-2.0, ISC or MIT-0 (see `LICENSE.md` in Zenodo or `./s2n-bignum/LICENSE`), which allow reuse and repurposing.
-- s2n-bignum only depends on HOL Light (which indirectly depends on OCaml) and the usual disassembly suite (e.g., `as`). We provide makefiles to help building the tool and verify the proofs (e.g., `./s2n-bignum/x86/Makefile`). To build and use s2n-bignum outside the artifact refer to the instructions at [github.com/awslabs/s2n-bignum](https://github.com/awslabs/s2n-bignum/tree/main)
-- We encourage reviewers to try the tutorials in `./s2n-bignum/tutorial`.
+- s2n-bignum only depends on HOL Light (which indirectly depends on OCaml) and the usual disassembly suite (e.g., `as`). We provide makefiles to help building the tool and verify the proofs (e.g., `./s2n-bignum/arm/Makefile`). To build and use s2n-bignum outside the artifact refer to the instructions at [github.com/awslabs/s2n-bignum](https://github.com/awslabs/s2n-bignum/tree/main)
+- We encourage reviewers to try the tutorials in `./s2n-bignum/arm/tutorial`.
 - To confirm the size of our work, run (note that the paper may not report the exact same numbers as the ones below as s2n-bignum is under active development and we performed a patch and rebase to create the artifact, we will update the camera-ready version of the paper with these numbers):
   - `cloc ./s2n-bignum/common --by-file --not-match-f '^(relational2\.ml|relational_n\.ml)$'` for the size of the non-relational part of s2n-bignum (expected: ~10k LOC)
   - `cloc ./s2n-bignum/common/relational2.ml s2n-bignum/common/relational_n.ml` for the size of the relational framework (expected: 1630 LOC)
@@ -169,4 +164,4 @@ s2n-bignum is under active development, during the last few months we have added
 
 > We will update the paper to reflect these changes for the camera-ready version.
 
-This artifact has been compiled with `docker build -t s2n-bignum .` (~10 min) on a linux machine and saved with `docker save s2n-bignum > s2n-bignum.tar` (<1 min). The docker image is ~2.6GB
+This artifact has been compiled with `docker build -t cav25-trial:7.0 .` (~10 min) on a linux machine and saved with `docker save cav25-trial:7.0 > s2n-bignum.tar` (<1 min). The docker image is ~2.6GB
