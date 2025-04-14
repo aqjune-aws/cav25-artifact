@@ -14,7 +14,7 @@ We claim all three badges: available, functional, and reusable.
 
 The correct behaviour of the artifcat can be evaluated by loading the docker image and running the tutorial of s2n-bignum:
 
-1. Load and enter the provided docker image:
+1. Load and enter the provided docker image (<1 min):
 ```bash
 docker load < s2n-bignum.tar
 docker run -it cav25-trial:7.0 /bin/bash
@@ -22,7 +22,7 @@ docker run -it cav25-trial:7.0 /bin/bash
 
 2. Run the tutorial (~5 min):
 ```bash
-cd $HOME/arm
+cd s2n-bignum/arm
 make tutorial -j
 ```
 
@@ -40,7 +40,7 @@ The artifact is available on Zenodo: [https://doi.org/XX.XXXX/zenodo.XXXXXXXX](h
 
 The evaluation for the Functional Badge consists of loading and running the artifact on the realtional proofs presented in Section 7.
 
-1. Load and enter the provided docker image:
+1. Load and enter the provided docker image (<1 min):
 ```bash
 docker load < s2n-bignum.tar
 docker run -it cav25-trial:7.0 /bin/bash
@@ -48,22 +48,25 @@ docker run -it cav25-trial:7.0 /bin/bash
 
 2. Run the proofs of Section 7 (~XXX min):
 ```bash
-cd $HOME/arm
+cd s2n-bignum/arm
 make proofs-cav25 -j
 ```
-By running the benchmark above, 19 proofs are machine checked:
-- 4 constant-time proofs, where 3 are different styles of proofs of `bignum_copy` and 1 is the proof of `bignum_inv_p25519`.
-- 15 program equivalence proofs.
 
-You can find these proofs at:
+  By running the benchmark above, 19 proofs are machine checked:
+  
+  - 4 constant-time proofs, where 3 are different styles of proofs of `bignum_copy` and 1 is the proof of `bignum_inv_p25519`.
+  - 15 program equivalence proofs.
 
-- XXX
-- XXX
-- XXX
-- XXX
-- XXX
+  You can find these proofs at:
+  
+  - XXX
+  - XXX
+  - XXX
+  - XXX
+  - XXX
 
 3. The expected results is:
+
 ```bash
 XXX
 ```
@@ -73,13 +76,13 @@ followed by the proven theorems for constant-time properties or program equivale
 
 4. (Optionally) We added a few more equivalence proofs for the x86 architecture after the paper submission, you can run these with (~XXX min):
 ```bash
-cd $HOME/x86
+cd s2n-bignum/x86
 make tutorial
 ```
 
 5. (Optionally) Run the whole s2n-bignum with both relational and non-relational proofs (~XXX hours):
 ```bash
-cd $HOME/arm
+cd s2n-bignum/arm
 make proofs
 ```
 
@@ -103,5 +106,5 @@ To confirm the Reusable Badge, check the following:
 
 ## Artifact Notes
 
-This artifact has been compiled with `docker build -t s2n-bignum .` (~15 min) in a linux machine and saved with `docker save s2n-bignum > s2n-bignum.tar` (~1 min).
+This artifact has been compiled with `docker build -t s2n-bignum .` (~10 min) on a linux machine and saved with `docker save s2n-bignum > s2n-bignum.tar` (<1 min).
 
