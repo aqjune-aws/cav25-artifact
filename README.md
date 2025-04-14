@@ -118,13 +118,13 @@ To confirm the Reusable Badge, check the following:
     - line 22: Definition 5 (Relational Ensures), page 8
     - line 249: Commutativity rule, page 7
     - line 256: Composition rule, page 7
-    - line 358: Lemma 2 (Commutativity), page 9
-    - line 393: Lemma 3 (Compositional), page 9 (typo in the paper: the step function in the rule should be n0 + n1 and m0 + m1 as in the repo. We will fix the paper)
-    - line 515: Lemma 4 (Compositional of Frame Conditions), page 9
-    - line 495: Lemma 5 (Conjunction), page 9
     - line 329: Definition 6 (Hybrid Ensures 2), page 10 (Note that, the repo does not provide an explicit definition of "Hybrid Ensures 2", instead it matches the precondition of Theorem 4)
     - line 329: Theorem 4, page 10
     - line 349: Theorem 3, page 10
+    - line 358: Lemma 2 (Commutativity), page 9
+    - line 393: Lemma 3 (Compositional), page 9 (typo in the paper: the step function in the rule should be n0 + n1 and m0 + m1 as in the repo. We will fix the paper)
+    - line 495: Lemma 5 (Conjunction), page 9
+    - line 515: Lemma 4 (Compositional of Frame Conditions), page 9
   - `s2n-bignum/XXX`
     - line XXX: Definition 7 (Constant-Time via Event Accumulation), page 12
     - line XXX: Definition 8 (Constant-Time via Unary to Relational Embedding), page 13
