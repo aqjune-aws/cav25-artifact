@@ -124,7 +124,7 @@ The evaluation for the Functional Badge consists of loading and running the arti
     make proofs -j
     ```
 
-## Reusable Badge
+## Reusable Badge (~10 minutes)
 
 To confirm the Reusable Badge, check the following:
 
