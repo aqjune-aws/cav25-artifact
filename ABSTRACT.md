@@ -3,7 +3,6 @@ Artifact for the paper #20: "Relational Hoare Logic for Realistically Modelled M
 The docker image includes the HOL Light theorem prover and a fork of the s2n-bignum repository (called 'hol-bignum' in the paper) containing the proof suite presented in the paper.
 We provide the instructions inside README.md to load the docker image and verify all proofs presented in Section 7, and to confirm that the size of the work matches the numbers we reported.
 
-- SHA256 checksum: XXX
 - Zenodo DOI: [10.5281/zenodo.15210623](https://doi.org/10.5281/zenodo.15210623)
 - Claimed badges: available, functional, reusable
 - We tested the artifact on Linux machine and WSL (Mac users may encounter some issues).
