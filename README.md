@@ -8,7 +8,8 @@ The artifact is a docker image containing HOL Light and a clone of the s2n-bignu
 The cloned s2n-bignum directory is a result of cloning https://github.com/awslabs/s2n-bignum and applying a patch that
 (1) adds constant time proofs that are not available in the mainstream yet, and (2) updating the existing equivalence checking proofs to explicitly print the equivalence theorems for artifact evaluation.
 The artifact is available on Zenodo at [10.5281/zenodo.15210623](https://doi.org/10.5281/zenodo.15210623).
-We do not require any large amount of system resources to run the artifact, we tested it on AArch64 Linux and Mac.
+
+We tested the artifact on AArch64 Linux and Mac, no special requirement for Linux but we suggest Mac users to increase docker resources: Docker Desktop > Settings > Resources > Advanced > Memory limit: 24GB, Swap 4GB, CPU limit: 12. On Mac with 12 cores we estimate an usage of ~20 GB of memory when 12 proofs run in parallel. Decrease the available CPUs in the make scripts (via the `-j` parameter, e.g., `-j2` for only 2 CPUs) if you cannot allocate that much memory.
 
 We claim all three badges: available, functional, and reusable.
 
@@ -70,7 +71,7 @@ The evaluation for the Functional Badge consists of loading and running the arti
     make proofs-cav25 -j
     ```
 
-    > Mac users: as for the tutorial, try `make proofs-cav25 -j2` if any error occurs. Execution time may take hours without multi-threading.
+    > Mac users: as for the tutorial, try `make proofs-cav25 -j2` if any error occurs. Execution time may take many more hours without multi-threading.
 
     By running the benchmark above, 19 proofs are machine checked:
 
