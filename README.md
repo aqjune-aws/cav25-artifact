@@ -128,31 +128,31 @@ To confirm the Reusable Badge, check the following:
 - s2n-bignum only depends on HOL Light (which indirectly depends on OCaml) and the usual disassembly suite (e.g., `as`). We provide makefiles to help building the tool and verify the proofs (e.g., `./s2n-bignum/arm/Makefile`). To build and use s2n-bignum outside the artifact refer to the instructions at [github.com/awslabs/s2n-bignum](https://github.com/awslabs/s2n-bignum/tree/main)
 - We encourage reviewers to try the tutorials in `./s2n-bignum/arm/tutorial`.
 - To confirm the size of our work, run (note that the paper may not report the exact same numbers as the ones below as s2n-bignum is under active development and we performed a patch and rebase to create the artifact, we will update the camera-ready version of the paper with these numbers):
-  - `cloc ./s2n-bignum/common --by-file --not-match-f '^(relational2\.ml|relational_n\.ml)$'` for the size of the non-relational part of s2n-bignum (expected: ~10k LOC)
-  - `cloc ./s2n-bignum/common/relational2.ml s2n-bignum/common/relational_n.ml` for the size of the relational framework (expected: 1630 LOC)
-  - `cloc . --by-file --match-f '^(bignum_inv_p25519.fn_and_const_combined\.ml|bignum_copy\.constant_time_ensures2\.ml|bignum_copy\.constant_time_ensures_n\.ml|bignum_copy\.fn_and_const_combined\.ml)$'` for the size of the constant-time proofs (expected: 4293 LOC)
-  - `cloc --by-file */proofs/equiv.ml` for the size of the equivalence framework (expected: 2452 LOC)
-  - `cloc ./s2n-bignum/arm/proofs --by-file --match-f '^(bignum_mul_8_16\.ml|bignum_sqr_8_16\.ml|bignum_emontredc_8n_cdiff\.ml|bignum_montmul_p256\.ml|bignum_montmul_p384\.ml|bignum_montmul_p521\.ml|bignum_montsqr_p256\.ml|bignum_montsqr_p384\.ml|bignum_montsqr_p521\.ml|bignum_mul_p521\.ml|bignum_sqr_p521\.ml|p256_montjadd\.ml|p256_montjdouble\.ml|p384_montjadd\.ml|p384_montjdouble\.ml)$'` for the size of equivalence proofs (expected 33k LOC)
-  - `cloc ./s2n-bignum --include-lang=OCaml` for the whole s2n-bignum proofs (expected: 890k LOC)
+  - `cloc ./s2n-bignum/common --by-file --not-match-f '^(relational2\.ml|relational_n\.ml)$'` for the size of the non-relational part of s2n-bignum (expected: ~10k LOC, referenced at page 6 of the paper)
+  - `cloc ./s2n-bignum/common/relational2.ml s2n-bignum/common/relational_n.ml` for the size of the relational framework (expected: 1630 LOC, referenced at page 9 of the paper)
+  - `cloc . --by-file --match-f '^(bignum_inv_p25519.fn_and_const_combined\.ml|bignum_copy\.constant_time_ensures2\.ml|bignum_copy\.constant_time_ensures_n\.ml|bignum_copy\.fn_and_const_combined\.ml)$'` for the size of the constant-time proofs (expected: 4293 LOC, referenced at page 16 of the paper)
+  - `cloc --by-file */proofs/equiv.ml` for the size of the equivalence framework (expected: 2452 LOC, referenced at page 16 of the paper)
+  - `cloc ./s2n-bignum/arm/proofs --by-file --match-f '^(bignum_mul_8_16\.ml|bignum_sqr_8_16\.ml|bignum_emontredc_8n_cdiff\.ml|bignum_montmul_p256\.ml|bignum_montmul_p384\.ml|bignum_montmul_p521\.ml|bignum_montsqr_p256\.ml|bignum_montsqr_p384\.ml|bignum_montsqr_p521\.ml|bignum_mul_p521\.ml|bignum_sqr_p521\.ml|p256_montjadd\.ml|p256_montjdouble\.ml|p384_montjadd\.ml|p384_montjdouble\.ml)$'` for the size of equivalence proofs (expected 33k LOC, referenced at page 17 of the paper)
+  - `cloc ./s2n-bignum --include-lang=OCaml` for the whole s2n-bignum proofs (expected: 890k LOC, referenced at page 6 of the paper)
 - The code is well written and documented, important files are (you can open files with `vi <filename>`, show line numbers with `:set number`, and goto a specific line with `:line_number`):
   - `./s2n-bignum/common/relational_n.ml`
-    - line 155: Definition 3 (Stronger Eventually), page 6
-    - line 171: Conjunction rule, page 7
-    - line 268: Lemma 1, page 7
-    - line 350: Definition 4 (Stronger Ensures), page 7
-    - line 363: Theorem 1, page 8
-    - line 394: Theorem 2, page 8
+    - line 155: Definition 3 (Stronger Eventually), page 6 of the paper
+    - line 171: Conjunction rule, page 7 of the paper
+    - line 268: Lemma 1, page 7 of the paper
+    - line 350: Definition 4 (Stronger Ensures), page 7 of the paper
+    - line 363: Theorem 1, page 8 of the paper
+    - line 394: Theorem 2, page 8 of the paper
   - `./s2n-bignum/common/relational2.ml`
-    - line 22: Definition 5 (Relational Ensures), page 8
-    - line 249: Commutativity rule, page 7
-    - line 256: Composition rule, page 7
-    - line 329: Definition 6 (Hybrid Ensures 2), page 10 (Note that, the repo does not provide an explicit definition of "Hybrid Ensures 2", instead it matches the precondition of Theorem 4)
-    - line 329: Theorem 4, page 10
-    - line 349: Theorem 3, page 10
-    - line 358: Lemma 2 (Commutativity), page 9
-    - line 393: Lemma 3 (Compositional), page 9 (typo in the paper: the step function in the rule should be n0 + n1 and m0 + m1 as in the repo. We will fix the paper)
-    - line 495: Lemma 5 (Conjunction), page 9
-    - line 515: Lemma 4 (Compositional of Frame Conditions), page 9
+    - line 22: Definition 5 (Relational Ensures), page 8 of the paper
+    - line 249: Commutativity rule, page 7 of the paper
+    - line 256: Composition rule, page 7 of the paper
+    - line 329: Definition 6 (Hybrid Ensures 2), page 10 (Note that, the repo does not provide an explicit definition of "Hybrid Ensures 2", instead it matches the precondition of Theorem 4) of the paper
+    - line 329: Theorem 4, page 10 of the paper
+    - line 349: Theorem 3, page 10 of the paper
+    - line 358: Lemma 2 (Commutativity), page 9 of the paper
+    - line 393: Lemma 3 (Compositional), page 9 of the paper (typo in the paper: the step function in the rule should be n0 + n1 and m0 + m1 as in the repo. We will fix the paper)
+    - line 495: Lemma 5 (Conjunction), page 9 of the paper
+    - line 515: Lemma 4 (Compositional of Frame Conditions), page 9 of the paper
   - To build and use s2n-bignum outside the artifact refer to the instructions at [github.com/awslabs/s2n-bignum](https://github.com/awslabs/s2n-bignum/tree/main).
 
 ## Changelog & Notes
