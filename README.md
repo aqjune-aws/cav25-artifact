@@ -49,6 +49,10 @@ The correct behavior of the artifact can be evaluated by loading the docker imag
     grep -F 'Exception' tutorial/*.correct
     ```
 
+4. For Mac users:
+
+   > We suggest Mac users to run the Functional Badge evaluation during the smoke-test phase to catch any potential issues with the memory limit sooner. If you run into memory issues, you can try to run the script with `make proofs-cav25 -j2` or `make proofs-cav25` (it will take much longer, though), or increase docker memory limit as explained above.
+
 ## Available Badge
 
 The artifact is available on Zenodo at [10.5281/zenodo.15210623](https://doi.org/10.5281/zenodo.15210623).
