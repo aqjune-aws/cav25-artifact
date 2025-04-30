@@ -1,5 +1,4 @@
-
-Artifact for the paper #20: "Relational Hoare Logic for Realistically Modelled Machine Code", submitted to CAV25.
+# Artifact for the paper #20: "Relational Hoare Logic for Realistically Modelled Machine Code", submitted to CAV25
 
 We provide two archives with the same artifact, one for amd64 and one for arm64 architecture. The compressed archive includes a docker image, the Dockerfile, the license file LICENSE.md, and README.md with the instructions to build and run the artifact in the chosen architecture. The docker image includes the [HOL Light](https://github.com/jrh13/hol-light) theorem prover and a fork of the [s2n-bignum](https://github.com/awslabs/s2n-bignum) repository (called 'hol-bignum' in the paper) containing the proof suite presented in the paper.
 
@@ -12,4 +11,4 @@ We provide two archives with the same artifact, one for amd64 and one for arm64
 
 ## Update After the Smoke Test
 
-We thank the Reviewers for their feedback. We have updated our submission with the amd64 image, and renamed the original one to `s2n-bignum-arm64.zip`. The README.md file inside both archives has been updated accordingly. Minor: the tag of the docker image is now `s2n-bignum-amd64:latest` for the amd64 image and `s2n-bignum-arm64:latest` for the arm64 image.
+We thank the Reviewers for their feedback. We updated our submission with support for the amd64 architecture. The README.md file inside both archives has been updated accordingly. Minor: the tag of the docker image is now `s2n-bignum-amd64:latest` for the amd64 image and `s2n-bignum-arm64:latest` for the arm64 image.
