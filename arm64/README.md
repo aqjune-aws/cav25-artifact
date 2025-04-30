@@ -1,16 +1,17 @@
-# CAV25 Artifact: s2n-bignum
+# CAV25 Artifact (arm64 architecture): s2n-bignum
+
+> This README file is for the **arm64** architecture. For amd64, please download the archive called `s2n-bignum-amd64.zip` from Zenodo.
 
 Artifact documentation for the paper #20: "Relational Hoare Logic for Realistically Modelled Machine Code", submitted to CAV25.
 Here we provide the instructions to verify all proofs presented in Section 7, and to confirm that the size of the work matches the numbers we reported.
 Optionally, we provide the instructions to run the rest of non-relational proofs.
 
-
 The artifact is a docker image containing [HOL Light](https://github.com/jrh13/hol-light) and a clone of the [s2n-bignum](https://github.com/awslabs/s2n-bignum) repository (called 'hol-bignum' in the paper for anonymity) containing the proof suite presented in the paper.
 The cloned s2n-bignum directory is a result of cloning https://github.com/awslabs/s2n-bignum and applying a patch that
 (1) adds constant time proofs that are not available in the mainstream yet, and (2) updating the existing equivalence checking proofs to explicitly print the equivalence theorems for artifact evaluation.
-The artifact is available on Zenodo at [10.5281/zenodo.15210623](https://doi.org/10.5281/zenodo.15210623).
+The artifact is available on Zenodo at [10.5281/zenodo.15308819](https://doi.org/10.5281/zenodo.15308819).
 
-We tested the artifact on AArch64 Linux and Mac.
+We tested this specific artifact on both arm64 Linux and Mac M4 machines.
 > No special requirement for Linux but we suggest Mac users to increase docker resources: Docker Desktop > Settings > Resources > Advanced > Memory limit: 24GB, Swap 4GB, CPU limit: 12. On Mac with 12 cores we estimate an usage of ~20 GB of memory when 12 proofs run in parallel. Decrease the available CPUs in the make scripts (via the `-j` parameter, e.g., `-j2` for only 2 CPUs) if you cannot allocate that much memory.
 
 We claim all three badges: available, functional, and reusable. In the following, we first provide the instructions to run the smoke-test phase, then the evaluation for each badge (available, functional, and reusable) with their expected running time and results.
@@ -22,8 +23,8 @@ The correct behavior of the artifact can be evaluated by loading the docker imag
 1. Load and enter the provided docker image (<1 min):
 
     ```bash
-    docker load < s2n-bignum.tar
-    docker run -it cav25-trial:7.0 /bin/bash
+    docker load < s2n-bignum-arm64.tar
+    docker run -it s2n-bignum-arm64:latest /bin/bash
     ```
 
 2. Run the tutorial (~5 min):
@@ -57,7 +58,7 @@ The correct behavior of the artifact can be evaluated by loading the docker imag
 
 ## Available Badge
 
-The artifact is available on Zenodo at [10.5281/zenodo.15210623](https://doi.org/10.5281/zenodo.15210623).
+The artifact is available on Zenodo at [10.5281/zenodo.15308819](https://doi.org/10.5281/zenodo.15308819).
 
 ## Functional Badge (~2 hours)
 
@@ -66,8 +67,8 @@ The evaluation for the Functional Badge consists of loading and running the arti
 1. Load and enter the provided docker image (<1 min):
 
     ```bash
-    docker load < s2n-bignum.tar
-    docker run -it cav25-trial:7.0 /bin/bash
+    docker load < s2n-bignum-arm64.tar
+    docker run -it s2n-bignum-arm64:latest /bin/bash
     ```
 
 2. Run the proofs of Section 7 (~2 hours):
@@ -171,4 +172,4 @@ s2n-bignum is under active development, during the last few months we have added
 
 > We will update the paper to reflect these changes for the camera-ready version.
 
-This artifact has been compiled with `docker build -t cav25-trial:7.0 .` (~10 min) on a Linux machine and saved with `docker save cav25-trial:7.0 > s2n-bignum.tar` (<1 min). The docker image is ~2.6GB
+This artifact has been compiled with `docker build -t s2n-bignum-arm64:latest .` (~10 min) on a Linux arm64 machine and saved with `docker save s2n-bignum-arm64:latest > s2n-bignum-arm64.tar` (<1 min). The Dockerfile for arm64 is available inside the zipped archive, and the image is ~2.6GB
